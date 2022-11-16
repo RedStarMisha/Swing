@@ -12,24 +12,27 @@ public class JListDecorator extends JList<String> {
         listModel = (DefaultListModel<String>) dataModel;
     }
 
-    public void setNewList(DefaultListModel<String> model) {
+    public void setNewList(Set<String> model) {
         LocalDateTime now = LocalDateTime.now();
-        for (int i = 0; i < model.getSize(); i++) {
-            map.put(model.getElementAt(i), now);
-        }
-        listModel = model;
+        model.stream().forEach((key) -> {
+            map.put(key, now);
+            listModel.addElement(key);
+        });
         super.setModel(listModel);
     }
 
     public void setEmptyList() {
         listModel = new DefaultListModel<>();
         map = new HashMap<>();
+        super.setModel(listModel);
     }
 
     public void addElement(String element) {
-        map.put(element, LocalDateTime.now());
-        listModel.addElement(element);
-        super.setModel(listModel);
+        if (!map.containsKey(element)) {
+            map.put(element, LocalDateTime.now());
+            listModel.addElement(element);
+            super.setModel(listModel);
+        }
     }
 
     public void editElement(int ind, String name) {

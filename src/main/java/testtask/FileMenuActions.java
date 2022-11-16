@@ -3,6 +3,8 @@ package testtask;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FileMenuActions {
     private Application app;
@@ -33,11 +35,11 @@ public class FileMenuActions {
             app.getFrame().setTitle(fileName);
 
             try (BufferedReader reader = new BufferedReader(new FileReader(directory + fileName))) {
-                DefaultListModel<String> listModel = new DefaultListModel<>();
+                Set<String> set = new HashSet<>();
                 while (reader.ready()) {
-                    listModel.addElement(reader.readLine());
+                    set.add(reader.readLine());
                 }
-                list.setNewList(listModel);
+                list.setNewList(set);
             } catch (Exception e) {
                 throw new RuntimeException();
             }
@@ -51,8 +53,8 @@ public class FileMenuActions {
         }
         try (FileWriter fw = new FileWriter(directory + fileName)) {
             ListModel<String> array = app.getList().getModel();
-            for(int i = 0; i < array.getSize(); i++) {
-                fw.write(array.getElementAt(i) + System.getProperty("line.separator"));
+            for (int i = 0; i < array.getSize(); i++) {
+                fw.write(array.getElementAt(i) + "\r\n");
             }
             app.getFrame().setTitle(fileName);
         } catch (Exception e) {
@@ -73,8 +75,8 @@ public class FileMenuActions {
 
         try (FileWriter fw = new FileWriter(directory + fileName)) {
             ListModel<String> array = app.getList().getModel();
-            for(int i = 0; i < array.getSize(); i++) {
-                fw.write(array.getElementAt(i)+ "\n");
+            for (int i = 0; i < array.getSize(); i++) {
+                fw.write(array.getElementAt(i) + "\r\n");
             }
         } catch (Exception e) {
             throw new RuntimeException();

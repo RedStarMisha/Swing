@@ -34,7 +34,6 @@ public class DraggingActions extends MouseInputAdapter {
                 list.setModel(listModel);
             }
         }
-
     }
 
     @Override

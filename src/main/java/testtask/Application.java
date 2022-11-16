@@ -6,20 +6,16 @@ import java.awt.event.ActionListener;
 
 public class Application implements ActionListener {
 
-    private JFrame frame = new JFrame();;
+    private JFrame frame;
     private JListDecorator list;
-
-    private FileMenuActions fileMenuActions;
-
-    private EditMenuActions editMenuActions;
+    private ActionFactory actionFactory;
 
     public Application() {
         createMainFrame();
         createLineArea();
         createMenu();
         frame.setVisible(true);
-        fileMenuActions = new FileMenuActions(this);
-        editMenuActions = new EditMenuActions(this);
+        actionFactory = new ActionFactory(this);
         dragAndDropListElements();
     }
 
@@ -28,7 +24,7 @@ public class Application implements ActionListener {
     }
 
     public void createMainFrame() {
-        //frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -36,7 +32,8 @@ public class Application implements ActionListener {
     private void createLineArea() {
         list = new JListDecorator(new DefaultListModel<>());
         frame.setTitle("New");
-        JScrollPane scrollPane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         list.setSelectedIndex(1);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         frame.add(scrollPane);
@@ -117,38 +114,8 @@ public class Application implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       String command = e.getActionCommand();
-       switch (command) {
-           case "New":
-            fileMenuActions.newCommand();
-            break;
-           case "Open":
-               fileMenuActions.open();
-               break;
-           case "SaveAs":
-               fileMenuActions.saveAs();
-               break;
-           case "Save":
-               fileMenuActions.save();
-               break;
-           case "Exit":
-                fileMenuActions.exit();
-                break;
-           case "Add element":
-               editMenuActions.addElement();
-               break;
-           case "Edit element":
-               editMenuActions.editElement();
-               break;
-           case "Delete element":
-               editMenuActions.deleteElement();
-               break;
-           case "Delete All":
-               editMenuActions.deleteAllElement();
-               break;
-           case "Sort":
-               editMenuActions.sort();
-       }
+        String command = e.getActionCommand();
+        actionFactory.makeAction(command);
     }
 
     public JFrame getFrame() {

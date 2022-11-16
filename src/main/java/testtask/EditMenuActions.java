@@ -46,47 +46,40 @@ public class EditMenuActions {
     }
 
     public void sort() {
-        JDialog dialog = new JDialog();
-        dialog.setLocationRelativeTo(application.getFrame());
+
+        JLabel label = new JLabel("Как сортировать:");
+        Icon icon = new ImageIcon("sort.jpg");
+        label.setIcon(icon);
 
         JRadioButton sort1 = new JRadioButton("В алфавитном порядке");
+        sort1.setAlignmentX(Component.LEFT_ALIGNMENT);
         JRadioButton sort2 = new JRadioButton("По длине строк");
+        sort2.setAlignmentX(Component.LEFT_ALIGNMENT);
         JRadioButton sort3 = new JRadioButton("По порядку добавления");
+        sort3.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         ButtonGroup group = new ButtonGroup();
         group.add(sort1);
         group.add(sort2);
         group.add(sort3);
-        JLabel label = new JLabel("Как сортировать:");
-        Icon icon = new ImageIcon("sort.jpg");
-
-        label.setIcon(icon);
 
         JPanel radioPanel = new JPanel();
-        radioPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        BoxLayout layout = new BoxLayout(radioPanel, BoxLayout.Y_AXIS);
 
-        gbc.fill = GridBagConstraints.VERTICAL;
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        radioPanel.add(label);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        radioPanel.add(sort1, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        radioPanel.add(sort2, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        radioPanel.add(sort3, gbc);
+        radioPanel.setLayout(layout);
+        radioPanel.add(sort1);
+        radioPanel.add(sort2);
+        radioPanel.add(sort3);
 
         JButton button = new JButton("Sort");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(button);
 
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Sorting");
+        dialog.setLocationRelativeTo(application.getFrame());
+
+        dialog.add(label, BorderLayout.NORTH);
         dialog.add(radioPanel, BorderLayout.CENTER);
         dialog.add(buttonPanel, BorderLayout.SOUTH);
 
