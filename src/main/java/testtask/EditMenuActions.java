@@ -71,13 +71,13 @@ public class EditMenuActions {
         radioPanel.add(sort2);
         radioPanel.add(sort3);
 
-        JButton button = new JButton("Sort");
+        JButton buttonSort = new JButton("Sort");
+        JButton buttonCancel = new JButton("Cancel");
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(button);
+        buttonPanel.add(buttonSort);
+        buttonPanel.add(buttonCancel);
 
-        JDialog dialog = new JDialog();
-        dialog.setTitle("Sorting");
-        dialog.setLocationRelativeTo(application.getFrame());
+        JDialog dialog = new JDialog(application.getFrame(), "Sorting", false);
 
         dialog.add(label, BorderLayout.NORTH);
         dialog.add(radioPanel, BorderLayout.CENTER);
@@ -86,17 +86,19 @@ public class EditMenuActions {
         dialog.setSize(200, 200);
 
         dialog.setVisible(true);
-        button.addActionListener((e -> {
+        buttonCancel.addActionListener((e -> dialog.dispose()));
+        buttonSort.addActionListener((e -> {
             if (sort1.isSelected()) {
                 list.sortByName();
-                dialog.setVisible(false);
+                dialog.dispose();
             } else if (sort2.isSelected()) {
                 list.sortByLength();
-                dialog.setVisible(false);
+                dialog.dispose();
             } else if (sort3.isSelected()) {
                 list.sortByDate();
-                dialog.setVisible(false);
+                dialog.dispose();
             }
         }));
+
     }
 }

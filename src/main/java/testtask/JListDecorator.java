@@ -48,30 +48,36 @@ public class JListDecorator extends JList<String> {
     }
 
     public void sortByDate() {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .forEach((entry) -> listModel.addElement(entry.getKey()));
-        super.setModel(listModel);
+        if (map != null && !map.isEmpty()) {
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            map.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue())
+                    .forEach((entry) -> listModel.addElement(entry.getKey()));
+            super.setModel(listModel);
+        }
     }
 
     public void sortByName() {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEach((entry) -> listModel.addElement(entry.getKey()));
-        super.setModel(listModel);
+        if (map != null && !map.isEmpty()) {
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            map.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .forEach((entry) -> listModel.addElement(entry.getKey()));
+            super.setModel(listModel);
+        }
     }
 
     public void sortByLength() {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        Comparator<String> comparator = Comparator.comparingInt(String::length);
-        map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey(comparator))
-                .forEach((entry) -> listModel.addElement(entry.getKey()));
-        super.setModel(listModel);
+        if (map != null && !map.isEmpty()) {
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            Comparator<String> comparator = Comparator.comparingInt(String::length);
+            map.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByKey(comparator))
+                    .forEach((entry) -> listModel.addElement(entry.getKey()));
+            super.setModel(listModel);
+        }
     }
 }
