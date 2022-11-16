@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class JListDecorator extends JList<String> {
-    private Map<String, LocalDateTime> map = new HashMap<>();
+    private Map<String, LocalDateTime> map;
     private DefaultListModel<String> listModel;
     public JListDecorator(ListModel<String> dataModel) {
         super(dataModel);
@@ -13,8 +13,10 @@ public class JListDecorator extends JList<String> {
     }
 
     public void setNewList(Set<String> model) {
+        map = new HashMap<>();
+        listModel = new DefaultListModel<>();
         LocalDateTime now = LocalDateTime.now();
-        model.stream().forEach((key) -> {
+        model.forEach((key) -> {
             map.put(key, now);
             listModel.addElement(key);
         });
