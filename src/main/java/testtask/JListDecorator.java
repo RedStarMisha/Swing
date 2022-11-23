@@ -10,6 +10,7 @@ public class JListDecorator extends JList<String> {
     public JListDecorator(ListModel<String> dataModel) {
         super(dataModel);
         listModel = (DefaultListModel<String>) dataModel;
+        map = new HashMap<>();
     }
 
     public void setNewList(Set<String> model) {

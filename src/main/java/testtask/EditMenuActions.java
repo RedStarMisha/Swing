@@ -2,6 +2,9 @@ package testtask;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class EditMenuActions {
     private Application application;
@@ -77,7 +80,11 @@ public class EditMenuActions {
         buttonPanel.add(buttonSort);
         buttonPanel.add(buttonCancel);
 
-        JDialog dialog = new JDialog(application.getFrame(), "Sorting", false);
+        JDialog dialog = new JDialog();
+        dialog.setLocationRelativeTo(application.getFrame());
+        dialog.setTitle("Sorting");
+        //dialog.setModal(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         dialog.add(label, BorderLayout.NORTH);
         dialog.add(radioPanel, BorderLayout.CENTER);
@@ -86,7 +93,12 @@ public class EditMenuActions {
         dialog.setSize(200, 200);
 
         dialog.setVisible(true);
-        buttonCancel.addActionListener((e -> dialog.dispose()));
+
+        buttonCancel.addActionListener((e -> {
+            dialog.setVisible(false);
+            dialog.dispose();
+        }));
+
         buttonSort.addActionListener((e -> {
             if (sort1.isSelected()) {
                 list.sortByName();
@@ -99,6 +111,7 @@ public class EditMenuActions {
                 dialog.dispose();
             }
         }));
+
 
     }
 }

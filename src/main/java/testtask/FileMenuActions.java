@@ -10,8 +10,8 @@ public class FileMenuActions {
     private Application app;
 
     private final JListDecorator list;
-    private String fileName = "";
-    private String directory = "";
+    private String fileName;
+    private String directory;
 
     public FileMenuActions(Application app) {
         this.app = app;
