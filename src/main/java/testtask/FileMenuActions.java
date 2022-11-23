@@ -7,32 +7,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FileMenuActions {
-    private Application app;
-
+    private AppInterface appInterface;
     private final JListDecorator list;
     private String fileName;
     private String directory;
 
-    public FileMenuActions(Application app) {
-        this.app = app;
-        list = app.getList();
+    public FileMenuActions(AppInterface appInterface) {
+        this.appInterface = appInterface;
+        this.list = appInterface.getList();
     }
 
     public void newCommand() {
         list.setEmptyList();
-        app.getFrame().setTitle("New");
+        appInterface.setTitle("New");
         fileName = null;
         directory = null;
     }
 
     public void open() {
-        FileDialog dialog = new FileDialog(app.getFrame(), "Open", FileDialog.LOAD);
+        FileDialog dialog = new FileDialog(appInterface, "Open", FileDialog.LOAD);
         dialog.setVisible(true);
 
         if (dialog.getFile() != null) {
             fileName = dialog.getFile();
             directory = dialog.getDirectory();
-            app.getFrame().setTitle(fileName);
+            appInterface.setTitle(fileName);
 
             try (BufferedReader reader = new BufferedReader(new FileReader(directory + fileName))) {
                 Set<String> set = new HashSet<>();
@@ -52,29 +51,28 @@ public class FileMenuActions {
             return;
         }
         try (FileWriter fw = new FileWriter(directory + fileName)) {
-            ListModel<String> array = app.getList().getModel();
+            ListModel<String> array = list.getModel();
             for (int i = 0; i < array.getSize(); i++) {
                 fw.write(array.getElementAt(i) + "\r\n");
             }
-            app.getFrame().setTitle(fileName);
+            appInterface.setTitle(fileName);
         } catch (Exception e) {
             throw new RuntimeException();
         }
     }
 
     public void saveAs() {
-        JFrame frame = app.getFrame();
-        FileDialog dialog = new FileDialog(frame, "Save", FileDialog.SAVE);
+        FileDialog dialog = new FileDialog(appInterface, "Save", FileDialog.SAVE);
         dialog.setVisible(true);
 
         if (dialog.getFile() != null) {
             fileName = dialog.getFile();
             directory = dialog.getDirectory();
-            frame.setTitle(fileName);
+            appInterface.setTitle(fileName);
         }
 
         try (FileWriter fw = new FileWriter(directory + fileName)) {
-            ListModel<String> array = app.getList().getModel();
+            ListModel<String> array = list.getModel();
             for (int i = 0; i < array.getSize(); i++) {
                 fw.write(array.getElementAt(i) + "\r\n");
             }

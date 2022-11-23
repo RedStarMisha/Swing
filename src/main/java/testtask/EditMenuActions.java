@@ -2,17 +2,16 @@ package testtask;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 public class EditMenuActions {
-    private Application application;
+    private AppInterface appInterface;
     private final JListDecorator list;
 
-    public EditMenuActions(Application application) {
-        this.application = application;
-        list = application.getList();
+    private JDialog dialog;
+
+    public EditMenuActions(AppInterface appInterface) {
+        this.appInterface = appInterface;
+        list = appInterface.getList();
     }
 
     public void addElement() {
@@ -50,6 +49,69 @@ public class EditMenuActions {
 
     public void sort() {
 
+//        JLabel label = new JLabel("Как сортировать:");
+//        Icon icon = new ImageIcon("sort.jpg");
+//        label.setIcon(icon);
+//
+//        JRadioButton sort1 = new JRadioButton("В алфавитном порядке");
+//        sort1.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        JRadioButton sort2 = new JRadioButton("По длине строк");
+//        sort2.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        JRadioButton sort3 = new JRadioButton("По порядку добавления");
+//        sort3.setAlignmentX(Component.LEFT_ALIGNMENT);
+//
+//        ButtonGroup group = new ButtonGroup();
+//        group.add(sort1);
+//        group.add(sort2);
+//        group.add(sort3);
+//
+//        JPanel radioPanel = new JPanel();
+//        BoxLayout layout = new BoxLayout(radioPanel, BoxLayout.Y_AXIS);
+//
+//        radioPanel.setLayout(layout);
+//        radioPanel.add(sort1);
+//        radioPanel.add(sort2);
+//        radioPanel.add(sort3);
+//
+//        JButton buttonSort = new JButton("Sort");
+//        JButton buttonCancel = new JButton("Cancel");
+//        JPanel buttonPanel = new JPanel();
+//        buttonPanel.add(buttonSort);
+//        buttonPanel.add(buttonCancel);
+//
+//        JDialog dialog = new JDialog();
+//        dialog.setLocationRelativeTo(appInterface);
+//        dialog.setTitle("Sorting");
+//        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//
+//        dialog.add(label, BorderLayout.NORTH);
+//        dialog.add(radioPanel, BorderLayout.CENTER);
+//        dialog.add(buttonPanel, BorderLayout.SOUTH);
+//
+//        dialog.setSize(200, 200);
+        buildSortPanel();
+
+        dialog.setVisible(true);
+
+        System.out.println(dialog.getComponent(2));
+
+//        buttonCancel.addActionListener((e -> dialog.setVisible(false)));
+//
+//        buttonSort.addActionListener((e -> {
+//            if (sort1.isSelected()) {
+//                list.sortByName();
+//                dialog.dispose();
+//            } else if (sort2.isSelected()) {
+//                list.sortByLength();
+//                dialog.dispose();
+//            } else if (sort3.isSelected()) {
+//                list.sortByDate();
+//                dialog.dispose();
+//            }
+//        }));
+    }
+
+    private void buildSortPanel() {
         JLabel label = new JLabel("Как сортировать:");
         Icon icon = new ImageIcon("sort.jpg");
         label.setIcon(icon);
@@ -77,13 +139,13 @@ public class EditMenuActions {
         JButton buttonSort = new JButton("Sort");
         JButton buttonCancel = new JButton("Cancel");
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setName("button");
         buttonPanel.add(buttonSort);
         buttonPanel.add(buttonCancel);
 
-        JDialog dialog = new JDialog();
-        dialog.setLocationRelativeTo(application.getFrame());
+        dialog = new JDialog();
+        dialog.setLocationRelativeTo(appInterface);
         dialog.setTitle("Sorting");
-        //dialog.setModal(true);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         dialog.add(label, BorderLayout.NORTH);
@@ -91,27 +153,5 @@ public class EditMenuActions {
         dialog.add(buttonPanel, BorderLayout.SOUTH);
 
         dialog.setSize(200, 200);
-
-        dialog.setVisible(true);
-
-        buttonCancel.addActionListener((e -> {
-            dialog.setVisible(false);
-            dialog.dispose();
-        }));
-
-        buttonSort.addActionListener((e -> {
-            if (sort1.isSelected()) {
-                list.sortByName();
-                dialog.dispose();
-            } else if (sort2.isSelected()) {
-                list.sortByLength();
-                dialog.dispose();
-            } else if (sort3.isSelected()) {
-                list.sortByDate();
-                dialog.dispose();
-            }
-        }));
-
-
     }
 }

@@ -1,12 +1,22 @@
 package testtask;
 
-public class ActionFactory {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ActionDispatcher implements ActionListener {
     private final EditMenuActions editMenuActions;
     private final FileMenuActions fileMenuActions;
 
-    public ActionFactory(Application application) {
-        this.editMenuActions = new EditMenuActions(application);
-        this.fileMenuActions = new FileMenuActions(application);
+
+    public ActionDispatcher(AppInterface appInterface) {
+        this.editMenuActions = new EditMenuActions(appInterface);
+        this.fileMenuActions = new FileMenuActions(appInterface);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        makeAction(command);
     }
 
     public void makeAction(String command) {
